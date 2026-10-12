@@ -1,0 +1,54 @@
+{
+  "name": "@cymbal/n8n-nodes-cymbal",
+  "version": "0.1.1",
+  "description": "n8n community node to create a contact in Cymbal via the Partners API",
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "cymbal",
+    "contacts",
+    "crm"
+  ],
+  "license": "MIT",
+  "homepage": "https://docs.cymbal.co/help/partners",
+  "author": {
+    "name": "Cymbal",
+    "email": "brandon@cymbal.co"
+  },
+  "scripts": {
+    "build": "n8n-node build",
+    "dev": "n8n-node dev",
+    "lint": "n8n-node lint",
+    "lint:fix": "n8n-node lint --fix",
+    "release": "n8n-node release",
+    "prepublishOnly": "n8n-node prerelease"
+  },
+  "files": [
+    "dist",
+    "!dist/tsconfig.tsbuildinfo"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "strict": true,
+    "credentials": [
+      "dist/credentials/CymbalApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Cymbal/Cymbal.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@n8n/node-cli": "^0.51.5",
+    "eslint": "9.39.4",
+    "prettier": "3.8.3",
+    "release-it": "20.2.0",
+    "typescript": "5.9.3"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cymbal/n8n-nodes-cymbal.git"
+  }
+}
