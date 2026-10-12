@@ -49,6 +49,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/cymbal/n8n-nodes-cymbal.git"
+    "url": "git+https://github.com/chainpass/n8n-nodes-cymbal.git"
   }
 }
