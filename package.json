@@ -1,6 +1,6 @@
 {
   "name": "@cymbal/n8n-nodes-cymbal",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "n8n community node to create a contact in Cymbal via the Partners API",
   "keywords": [
     "n8n-community-node-package",
