@@ -40,14 +40,15 @@ Add the **Cymbal** node, choose **Contact → Create**, and map fields from earl
 | Field | Notes |
 | --- | --- |
 | Email / Phone | At least one is required. The item fails if both are blank. |
-| First Name, Last Name, Full Name | Optional. |
-| Tags | Optional, multiple values. Tags must already exist in Cymbal. |
-| Audience ID | Optional number. |
-| Birthday | Optional, `YYYY-MM-DD`. |
-| Opt In Email / Opt In SMS | **Leave Unchanged** (default), **Subscribe**, or **Unsubscribe**. |
-| Genres | Optional, multiple values from Cymbal's genre list. |
+| **Additional Fields** | Expand to add optional fields: |
+| ↳ First Name, Last Name, Full Name | Optional. |
+| ↳ Tags | Optional, multiple values. Tags must already exist in Cymbal. |
+| ↳ Audience ID | Optional number. |
+| ↳ Birthday | Optional, `YYYY-MM-DD`. |
+| ↳ Opt In Email / Opt In SMS | **Leave Unchanged** (default), **Subscribe**, or **Unsubscribe**. |
+| ↳ Genres | Optional, multiple values from Cymbal's genre list. |
 
-Blank fields are left out of the request, so they never overwrite existing data.
+Blank or omitted fields are left out of the request, so they never overwrite existing data.
 
 ### Example workflow
 
@@ -69,6 +70,7 @@ Built with `@n8n/node-cli` and tested with n8n 1.x (Nodes API version 1). The pa
 
 ## Version history
 
+- **0.1.2**: Moved optional fields into "Additional Fields" collection per n8n review guidelines. Removed unused `requestDefaults` block.
 - **0.1.1**: Moved to the official n8n-node tooling, added themed icons, AI-tool support, stricter error handling, and full README. Published with GitHub Actions provenance.
 - **0.1.0**: Initial release with Contact → Create.
 

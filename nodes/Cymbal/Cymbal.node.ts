@@ -63,13 +63,6 @@ export class Cymbal implements INodeType {
 				required: true,
 			},
 		],
-		requestDefaults: {
-			baseURL: 'https://api.cymbal.co',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-		},
 		properties: [
 			{
 				displayName: 'Resource',
@@ -110,7 +103,9 @@ export class Cymbal implements INodeType {
 				type: 'string',
 				default: '',
 				placeholder: 'name@example.com',
-				description: 'Email or phone is required. Leave blank to omit.',
+				hint: 'Email or Phone (or both) must be provided',
+				description:
+					'At least one of Email or Phone is required. Provide one or both. Leave blank if using Phone only.',
 				displayOptions: {
 					show: {
 						resource: ['contact'],
@@ -124,63 +119,9 @@ export class Cymbal implements INodeType {
 				type: 'string',
 				default: '',
 				placeholder: '+15551234567',
-				description: 'Email or phone is required. Leave blank to omit.',
-				displayOptions: {
-					show: {
-						resource: ['contact'],
-						operation: ['create'],
-					},
-				},
-			},
-			{
-				displayName: 'First Name',
-				name: 'first_name',
-				type: 'string',
-				default: '',
-				description: 'Leave blank to omit',
-				displayOptions: {
-					show: {
-						resource: ['contact'],
-						operation: ['create'],
-					},
-				},
-			},
-			{
-				displayName: 'Last Name',
-				name: 'last_name',
-				type: 'string',
-				default: '',
-				description: 'Leave blank to omit',
-				displayOptions: {
-					show: {
-						resource: ['contact'],
-						operation: ['create'],
-					},
-				},
-			},
-			{
-				displayName: 'Full Name',
-				name: 'full_name',
-				type: 'string',
-				default: '',
-				description: 'Leave blank to omit',
-				displayOptions: {
-					show: {
-						resource: ['contact'],
-						operation: ['create'],
-					},
-				},
-			},
-			{
-				displayName: 'Tags',
-				name: 'tags',
-				type: 'string',
-				typeOptions: {
-					multipleValues: true,
-				},
-				default: [],
+				hint: 'Email or Phone (or both) must be provided',
 				description:
-					'Tags that already exist in the Cymbal manager. Allows multiple values. Leave empty to omit.',
+					'At least one of Email or Phone is required. Provide one or both. Leave blank if using Email only.',
 				displayOptions: {
 					show: {
 						resource: ['contact'],
@@ -189,107 +130,119 @@ export class Cymbal implements INodeType {
 				},
 			},
 			{
-				displayName: 'Audience ID',
-				name: 'audience_id',
-				type: 'string',
-				default: '',
-				placeholder: '123',
-				description:
-					'Integer audience ID from the Audience tab URL. Sent as a number. Leave blank to omit.',
+				displayName: 'Additional Fields',
+				name: 'additionalFields',
+				type: 'collection',
+				placeholder: 'Add Field',
+				default: {},
 				displayOptions: {
 					show: {
 						resource: ['contact'],
 						operation: ['create'],
 					},
 				},
-			},
-			{
-				displayName: 'Birthday',
-				name: 'birthday',
-				type: 'string',
-				default: '',
-				placeholder: 'YYYY-MM-DD',
-				description:
-					'Birthday. Accepted formats include YYYY-MM-DD, YYYY-M-D, YYYY/MM/DD, MM/DD/YYYY, and M/D/YYYY. Leave blank to omit.',
-				displayOptions: {
-					show: {
-						resource: ['contact'],
-						operation: ['create'],
-					},
-				},
-			},
-			{
-				displayName: 'Opt In Email',
-				name: 'opt_in_email',
-				type: 'options',
 				options: [
 					{
-						name: 'Leave Unchanged',
-						value: 'omit',
+						displayName: 'Audience ID',
+						name: 'audience_id',
+						type: 'string',
+						default: '',
+						placeholder: '123',
+						description:
+							'Integer audience ID from the Audience tab URL. Sent as a number.',
 					},
 					{
-						name: 'Subscribe',
-						value: 'true',
+						displayName: 'Birthday',
+						name: 'birthday',
+						type: 'string',
+						default: '',
+						placeholder: 'YYYY-MM-DD',
+						description:
+							'Birthday. Accepted formats: YYYY-MM-DD, YYYY-M-D, YYYY/MM/DD, MM/DD/YYYY, M/D/YYYY.',
 					},
 					{
-						name: 'Unsubscribe',
-						value: 'false',
+						displayName: 'First Name',
+						name: 'first_name',
+						type: 'string',
+						default: '',
+					},
+					{
+						displayName: 'Full Name',
+						name: 'full_name',
+						type: 'string',
+						default: '',
+					},
+					{
+						displayName: 'Genres',
+						name: 'genres',
+						type: 'string',
+						typeOptions: {
+							multipleValues: true,
+						},
+						default: [],
+						description: "Must match Cymbal's genre list. Allows multiple values.",
+					},
+					{
+						displayName: 'Last Name',
+						name: 'last_name',
+						type: 'string',
+						default: '',
+					},
+					{
+						displayName: 'Opt In Email',
+						name: 'opt_in_email',
+						type: 'options',
+						options: [
+							{
+								name: 'Leave Unchanged',
+								value: 'omit',
+							},
+							{
+								name: 'Subscribe',
+								value: 'true',
+							},
+							{
+								name: 'Unsubscribe',
+								value: 'false',
+							},
+						],
+						default: 'omit',
+						description:
+							'Maps to opt_ins.email. Omitted when unchanged. False unsubscribes.',
+					},
+					{
+						displayName: 'Opt In SMS',
+						name: 'opt_in_sms',
+						type: 'options',
+						options: [
+							{
+								name: 'Leave Unchanged',
+								value: 'omit',
+							},
+							{
+								name: 'Subscribe',
+								value: 'true',
+							},
+							{
+								name: 'Unsubscribe',
+								value: 'false',
+							},
+						],
+						default: 'omit',
+						description:
+							'Maps to opt_ins.sms. Omitted when unchanged. False unsubscribes.',
+					},
+					{
+						displayName: 'Tags',
+						name: 'tags',
+						type: 'string',
+						typeOptions: {
+							multipleValues: true,
+						},
+						default: [],
+						description: 'Tags that already exist in Cymbal. Allows multiple values.',
 					},
 				],
-				default: 'omit',
-				description:
-					'Maps to opt_ins.email. Omitted when left unchanged (subscription status stays as-is). False unsubscribes the contact.',
-				displayOptions: {
-					show: {
-						resource: ['contact'],
-						operation: ['create'],
-					},
-				},
-			},
-			{
-				displayName: 'Opt In SMS',
-				name: 'opt_in_sms',
-				type: 'options',
-				options: [
-					{
-						name: 'Leave Unchanged',
-						value: 'omit',
-					},
-					{
-						name: 'Subscribe',
-						value: 'true',
-					},
-					{
-						name: 'Unsubscribe',
-						value: 'false',
-					},
-				],
-				default: 'omit',
-				description:
-					'Maps to opt_ins.sms. Omitted when left unchanged (subscription status stays as-is). False unsubscribes the contact.',
-				displayOptions: {
-					show: {
-						resource: ['contact'],
-						operation: ['create'],
-					},
-				},
-			},
-			{
-				displayName: 'Genres',
-				name: 'genres',
-				type: 'string',
-				typeOptions: {
-					multipleValues: true,
-				},
-				default: [],
-				description:
-					'Optional. Must match Cymbal’s genre list. Allows multiple values. Leave empty to omit.',
-				displayOptions: {
-					show: {
-						resource: ['contact'],
-						operation: ['create'],
-					},
-				},
 			},
 		],
 		usableAsTool: true,
@@ -326,37 +279,39 @@ export class Cymbal implements INodeType {
 				if (email) contact.email = email;
 				if (phone) contact.phone = phone;
 
-				const firstName = cleanString(this.getNodeParameter('first_name', i, ''));
+				const additionalFields = this.getNodeParameter('additionalFields', i, {}) as IDataObject;
+
+				const firstName = cleanString(additionalFields.first_name);
 				if (firstName) contact.first_name = firstName;
 
-				const lastName = cleanString(this.getNodeParameter('last_name', i, ''));
+				const lastName = cleanString(additionalFields.last_name);
 				if (lastName) contact.last_name = lastName;
 
-				const fullName = cleanString(this.getNodeParameter('full_name', i, ''));
+				const fullName = cleanString(additionalFields.full_name);
 				if (fullName) contact.full_name = fullName;
 
-				const tags = parseStringList(this.getNodeParameter('tags', i, []));
+				const tags = parseStringList(additionalFields.tags);
 				if (tags) contact.tags = tags;
 
 				let audienceId: number | undefined;
 				try {
-					audienceId = parseAudienceId(this.getNodeParameter('audience_id', i, ''));
+					audienceId = parseAudienceId(additionalFields.audience_id);
 				} catch (error) {
 					throw new NodeOperationError(this.getNode(), error as Error, { itemIndex: i });
 				}
 				if (audienceId !== undefined) contact.audience_id = audienceId;
 
-				const birthday = cleanString(this.getNodeParameter('birthday', i, ''));
+				const birthday = cleanString(additionalFields.birthday);
 				if (birthday) contact.birthday = birthday;
 
-				const genres = parseStringList(this.getNodeParameter('genres', i, []));
+				const genres = parseStringList(additionalFields.genres);
 				if (genres) contact.genres = genres;
 
 				const optIns: IDataObject = {};
-				const emailOptIn = parseOptIn(this.getNodeParameter('opt_in_email', i, 'omit'));
+				const emailOptIn = parseOptIn(additionalFields.opt_in_email);
 				if (emailOptIn !== undefined) optIns.email = emailOptIn;
 
-				const smsOptIn = parseOptIn(this.getNodeParameter('opt_in_sms', i, 'omit'));
+				const smsOptIn = parseOptIn(additionalFields.opt_in_sms);
 				if (smsOptIn !== undefined) optIns.sms = smsOptIn;
 
 				const body: IDataObject = { contact };
